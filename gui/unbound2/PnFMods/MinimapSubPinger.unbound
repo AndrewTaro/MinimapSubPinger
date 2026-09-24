@@ -31,7 +31,6 @@
 			)
 		)
 
-		#modded
 		(event evMarkerUpdate)
 		(var markerRelationComponent:gfx = "_markerEntity && _markerEntity.hasComponent(CC.relation) ? _markerEntity.relation : null" (event "_markerEntity.evAdded"))
 		(var markerRelation:number = "markerRelationComponent ? markerRelationComponent.value : -1" (event "markerRelationComponent.evChanged"))
@@ -45,21 +44,18 @@
 									: TWO_TEAMS_COLOR_TRANSFORMS['white']")
 		(dispatch evMarkerUpdate args={} (event "evEnterFrame") (bind enabled "_isEnemy"))
 		(macro GET_MARKER_ENTITY_COMPONENT  'mapPosition')
-		(macro GET_MARKER_ENTITY_COMPONENT  'data')
+		(var dataComponent:gfx = "_markerEntity && _markerEntity.hasComponent(CC.mods_DataComponent) ? _markerEntity.mods_DataComponent : null" (event "_markerEntity.evAdded") (event "_markerEntity.evRemoved"))
 		(var pingerYaw:number = "mapPositionComponent ? radToGrad(mapPositionComponent.yaw) : 0" (event "evMarkerUpdate"))
 		(var movingYaw:number = "dataComponent ? radToGrad(dataComponent.data.vehicleYaw) : 0")
 
 		(var isEnemyPingerOnMap:bool = "_isEnemy && _markerType == 'minimap'")
-		#
 	)
 	(dispatch evShow on='addedToStage')
 	(macro AttentionCircleFX "dotRadius" "MARKER_CONFIG_MAP[_markerType].effectSize" "SHORT_ATTENTION_DURATION" "isReversedAnim")
 	(block
 		(bind colorTransform "markerColorTransform")
 		(block
-			#mod
 			(bind visible "!isEnemyPingerOnMap")
-			#
 			(style (position = "absolute"))
 			(bind alpha "dotAlpha")
 			(controller $Sector
@@ -68,7 +64,6 @@
 				(color = "0xFFFFFFFF")
 			)
 		)
-		#mod
 		(block
 			(bind visible "isEnemyPingerOnMap")
 
@@ -89,6 +84,5 @@
 				)
 			)
 		)
-		#
 	)
 )
